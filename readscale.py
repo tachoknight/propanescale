@@ -45,5 +45,7 @@ def weigh():
 
 while True:
 	weight = weigh()
+	ts = time.time()
+	txline = str(ts) + "," + str(weight)
 	print("Current weight is " + str(weight))
-	client.publish('propanescaletopic', weight)
+	client.publish('propanescaletopic', txline)
