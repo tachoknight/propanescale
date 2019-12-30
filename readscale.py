@@ -32,13 +32,13 @@ def weigh():
 	while True:
 		if datetime.datetime.now() >= endTime:
 			break
-	reading = ser.readline()
-	if len(reading.decode('UTF-8')) > 0:
-		data = reading.decode('UTF-8').replace('\n', '').replace('\r', '')
-		# The data we get from openscale is in the format: "589840246,4.89,lbs,23.75,0,"
-		# where the weight is position 1 in the array
-		dataparts = data.split(',')
-		readings.append(dataparts[1])
+		reading = ser.readline()
+		if len(reading.decode('UTF-8')) > 0:
+			data = reading.decode('UTF-8').replace('\n', '').replace('\r', '')
+			# The data we get from openscale is in the format: "589840246,4.89,lbs,23.75,0,"
+			# where the weight is position 1 in the array
+			dataparts = data.split(',')
+			readings.append(dataparts[1])
 
 	# And return the mean of the samples
 	return np.mean(np.array(readings).astype(np.float))
