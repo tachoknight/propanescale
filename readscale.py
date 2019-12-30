@@ -3,6 +3,7 @@ import paho.mqtt.client as mqtt
 import time
 import serial
 import numpy as np
+import math
 
 '''
 Uses the following installed via pip3:
@@ -41,7 +42,7 @@ def weigh():
 			readings.append(dataparts[1])
 
 	# And return the mean of the samples
-	return np.mean(np.array(readings).astype(np.float))
+	return math.floor(np.mean(np.array(readings).astype(np.float)))
 
 while True:
 	weight = weigh()
