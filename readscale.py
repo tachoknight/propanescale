@@ -21,10 +21,6 @@ ser = serial.Serial(
 	bytesize = serial.EIGHTBITS,
 	timeout = 1)
 
-# Set up our mqtt connection
-client = mqtt.Client()
-client.connect('glue', 1883, 60)
-
 def weigh():
 	print("weighing...")
 	# Take one minute of samples
@@ -48,5 +44,15 @@ while True:
 	weight = weigh()
 	ts = round(time.time())
 	txline = str(ts) + "," + str(weight)
+	now = datetime.datetime.now()
+	print (now.strftime("%Y-%m-%d %H:%M:%S"))
 	print("Current weight is " + str(weight))
-	client.publish('propanescaletopic', txline)
+	# Set up our mqtt connection
+	try:
+		client = mqtt.Client()
+		client.connect('glue', 1883, 60)
+		client.publish('propanescaletopic', txline)
+		client.disconnect()
+	except:
+		print("Had an error connecting to glue")
+
